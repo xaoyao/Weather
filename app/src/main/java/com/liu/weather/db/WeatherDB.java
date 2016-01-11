@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * 封装数据库操作
+ * 通过WeatherDB.getInstance()方法获取实例
  * Created by liu on 2016/1/11 0011.
  */
 public class WeatherDB {
