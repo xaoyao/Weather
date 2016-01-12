@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.liu.weather.R;
+import com.liu.weather.service.AutoUpdateService;
 import com.liu.weather.util.HttpCallbackListener;
 import com.liu.weather.util.HttpUtil;
 import com.liu.weather.util.Utility;
@@ -167,8 +168,11 @@ public class WeatherActivity extends AppCompatActivity {
         fengliText.setText(prefs.getString("fengli",""));
         lowText.setText(prefs.getString("low",""));
         highText.setText(prefs.getString("high",""));
-        ganmaoText.setText(prefs.getString("ganmao",""));
+        ganmaoText.setText(prefs.getString("ganmao", ""));
         cityNameText.setVisibility(View.VISIBLE);
         weatherInfoLayout.setVisibility(View.VISIBLE);
+        //启动自动更新服务
+        Intent intent=new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 }
