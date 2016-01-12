@@ -143,7 +143,9 @@ public class Utility {
                                        String fengli,String high,String type,String low,
                                        String date,String cityName){
         SharedPreferences.Editor editor= context.getSharedPreferences("weatherInfo",Context.MODE_PRIVATE).edit();
+        //存储是否选中城市，选中城市，下次直接显示天气信息
         editor.putBoolean("city_selected",true);
+
         editor.putString("wendu", wendu);
         editor.putString("ganmao", ganmao);
         editor.putString("fengxiang", fengxiang);

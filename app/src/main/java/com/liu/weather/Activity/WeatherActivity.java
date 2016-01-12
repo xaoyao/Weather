@@ -1,5 +1,6 @@
 package com.liu.weather.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -78,6 +79,7 @@ public class WeatherActivity extends AppCompatActivity {
         highText= (TextView) findViewById(R.id.high);
         ganmaoText= (TextView) findViewById(R.id.ganmao);
 
+
         String countyCode=getIntent().getStringExtra("countyCode");
         //countyCode是否为空
         if(!TextUtils.isEmpty(countyCode)){
@@ -86,6 +88,38 @@ public class WeatherActivity extends AppCompatActivity {
             weatherInfoLayout.setVisibility(View.INVISIBLE);
             cityNameText.setVisibility(View.INVISIBLE);
             queryWeatherInfo(countyCode);
+            SharedPreferences.Editor editor=getSharedPreferences("weatherInfo",MODE_PRIVATE).edit();
+            //保存countyCode方便进行天气更新
+            editor.putString("countyCode",countyCode);
+            editor.commit();
+        }else {
+            showWeather();
+        }
+    }
+
+    /**
+     * 按钮点击事件
+     * @param view
+     */
+    public void click(View view){
+        switch (view.getId()){
+            case R.id.switch_city:
+                //选择城市
+                Intent intent=new Intent(this,ChooseAreaActivity.class);
+                intent.putExtra("from_weather_activity", true);
+                startActivity(intent);
+                finish();
+            break;
+            case R.id.refresh_weather:
+                //手动刷新天气信息
+                dateText.setText("同步中...");
+                SharedPreferences prefs=getSharedPreferences("weatherInfo",MODE_PRIVATE);
+                String code=prefs.getString("countyCode","");
+                if(!TextUtils.isEmpty(code)){
+                    queryWeatherInfo(code);
+                }
+                break;
+
         }
     }
 

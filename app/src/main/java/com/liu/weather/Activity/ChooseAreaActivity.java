@@ -57,12 +57,13 @@ public class ChooseAreaActivity extends AppCompatActivity {
     private int currentLevel;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_area);
         //判断是否为第一次启动，第一次启动初始化数据库
-        SharedPreferences pref=getSharedPreferences("data",MODE_PRIVATE);
+        SharedPreferences pref=getSharedPreferences("data", MODE_PRIVATE);
         boolean isFirst=pref.getBoolean("isFirst", true);
         if(isFirst){
             //初始化数据库
@@ -70,6 +71,16 @@ public class ChooseAreaActivity extends AppCompatActivity {
             SharedPreferences.Editor editor=getSharedPreferences("data",MODE_PRIVATE).edit();
             editor.putBoolean("isFirst",false);
             editor.commit();
+        }
+        //是否是从天气信息界面跳转过来的
+        boolean isFromWeatherActivity =getIntent().getBooleanExtra("from_weather_activity",false);
+        SharedPreferences preference=getSharedPreferences("weatherInfo",MODE_PRIVATE);
+        //判断是否已经选中过城市，若选中，且不是从WeatherActivity跳转过来的则直接显示天气信息
+        if(preference.getBoolean("city_selected",false)&&!isFromWeatherActivity){
+            Intent intent=new Intent(this,WeatherActivity.class);
+            startActivity(intent);
+            finish();
+            return;
         }
 
         listView= (ListView) findViewById(R.id.list_view);
