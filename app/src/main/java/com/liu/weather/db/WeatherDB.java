@@ -145,7 +145,8 @@ public class WeatherDB {
         Cursor cursor=db.query("County",null,"city_code=?",new String[]{cityCode},null,null,null);
         while (cursor.moveToNext()){
             County county=new County();
-            county.setCountyName(cursor.getString(cursor.getColumnIndex("county_id")));
+            county.setId(cursor.getInt(cursor.getColumnIndex("_id")));
+            county.setCountyName(cursor.getString(cursor.getColumnIndex("county_name")));
             county.setCountyCode(cursor.getString(cursor.getColumnIndex("county_code")));
             county.setCityCode(cursor.getString(cursor.getColumnIndex("city_code")));
             list.add(county);

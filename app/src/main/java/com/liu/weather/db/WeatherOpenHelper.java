@@ -4,10 +4,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.liu.weather.util.Utility;
+
 /**
  * Created by liu on 2016/1/11 0011.
  */
 public class WeatherOpenHelper extends SQLiteOpenHelper{
+    private Context context;
+
     /**
      * 省份建表语句
      */
@@ -34,6 +38,7 @@ public class WeatherOpenHelper extends SQLiteOpenHelper{
 
     public WeatherOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
+        this.context=context;
     }
 
     @Override
