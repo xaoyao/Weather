@@ -2,7 +2,9 @@ package com.liu.weather.util;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.Xml;
 
@@ -11,12 +13,18 @@ import com.liu.weather.model.City;
 import com.liu.weather.model.County;
 import com.liu.weather.model.Province;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by liu on 2016/1/11 0011.
@@ -99,5 +107,53 @@ public class Utility {
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 解析服务器返回的JSON数据，并将解析的数据存储到本地
+     * @param context
+     * @param response
+     */
+    public static void handleWeatherResponse(Context context,String response){
+        try {
+            JSONObject object=new JSONObject(response);
+            JSONObject weatherInfo=object.getJSONObject("data");
+            String wendu=weatherInfo.getString("wendu");
+            String ganmao=weatherInfo.getString("ganmao");
+            JSONArray array=weatherInfo.getJSONArray("forecast");
+            JSONObject info= (JSONObject) array.get(0);
+            String fengxiang=info.getString("fengxiang");
+            String fengli=info.getString("fengli");
+            String high=info.getString("high");
+            String type=info.getString("type");
+            String low=info.getString("low");
+            String date=info.getString("date");
+            String cityName=weatherInfo.getString("city");
+            saveWeatherInfo(context,wendu,ganmao,fengxiang,fengli,high,type,low,date,cityName);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 将服务器返回的信息存储到SharedPrefences文件中
+     */
+    public static void saveWeatherInfo(Context context , String wendu,String ganmao,String fengxiang,
+                                       String fengli,String high,String type,String low,
+                                       String date,String cityName){
+        SharedPreferences.Editor editor= context.getSharedPreferences("weatherInfo",Context.MODE_PRIVATE).edit();
+        editor.putBoolean("city_selected",true);
+        editor.putString("wendu", wendu);
+        editor.putString("ganmao", ganmao);
+        editor.putString("fengxiang", fengxiang);
+        editor.putString("fengli", fengli);
+        editor.putString("high", high);
+        editor.putString("type", type);
+        editor.putString("low",low);
+        editor.putString("date",date);
+        editor.putString("cityName",cityName);
+        editor.commit();
+
     }
 }

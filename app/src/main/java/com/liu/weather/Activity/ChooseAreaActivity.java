@@ -1,5 +1,6 @@
 package com.liu.weather.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -87,7 +88,11 @@ public class ChooseAreaActivity extends AppCompatActivity {
                     selectedCity=cityList.get(position);
                     queryCounties();
                 }else if(currentLevel==LEVEL_COUNTY){
-
+                    //启动WeatherActivity,显示天气信息
+                    String countyCode=countyList.get(position).getCountyCode();
+                    Intent intent=new Intent(ChooseAreaActivity.this,WeatherActivity.class);
+                    intent.putExtra("countyCode",countyCode);
+                    startActivity(intent);
                 }
             }
         });
