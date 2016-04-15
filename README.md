@@ -9,4 +9,4 @@
 
 * 天气信息
 
-	![image](https://github.com/xaoyao/Weather/blob/master/Screenshot/Screenshot_20160304-115536.png)
+	![image](https://github.com/xaoyao/Weather/blob/master/Screenshot/Screenshot_20160415-141646.png)

@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.liu.weather.Activity.WeatherActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/img_bg">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#484E61">
+        android:layout_marginTop="24dp">
         <Button
             android:id="@+id/switch_city"
             android:layout_width="30dp"
@@ -41,8 +42,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#27A5F9">
+        android:layout_weight="1">
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
